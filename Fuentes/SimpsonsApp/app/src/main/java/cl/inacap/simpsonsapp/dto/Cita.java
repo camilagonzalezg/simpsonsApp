@@ -2,40 +2,41 @@ package cl.inacap.simpsonsapp.dto;
 
 public class Cita {
 
-    private String cita;
-    private String personaje;
-    private String imagen;
-    private String personajeDireccion;
+    private String quote;
+    private String character;
+    private String image;
+    private String characterDirection;
 
-    public String getCita() {
-        return cita;
+    public String getQuote() {
+        return quote;
     }
 
-    public void setCita(String cita) {
-        this.cita = cita;
+    public void setQuote(String quote) {
+        this.quote = quote;
     }
 
-    public String getPersonaje() {
-        return personaje;
+    public String getCharacter() {
+        return character;
     }
 
-    public void setPersonaje(String personaje) {
-        this.personaje = personaje;
+    public void setCharacter(String character) {
+        this.character = character;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImage() {
+        return image;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getPersonajeDireccion() {
-        return personajeDireccion;
+    public String getCharacterDirection() {
+        return characterDirection;
     }
 
-    public void setPersonajeDireccion(String personajeDireccion) {
-        this.personajeDireccion = personajeDireccion;
+    public void setCharacterDirection(String characterDirection) {
+        this.characterDirection = characterDirection;
     }
+
 }

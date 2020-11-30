@@ -39,9 +39,9 @@ public class CitasListAdapter extends ArrayAdapter<Cita> {
         TextView nombreTxt = fila.findViewById(R.id.tv_nombre);
         TextView citaTxt = fila.findViewById(R.id.tv_cita);
         ImageView imagen = fila.findViewById(R.id.iv_personaje);
-        nombreTxt.setText(this.citas.get(position).getPersonaje());
-        citaTxt.setText(this.citas.get(position).getCita());
-        Picasso.get().load(this.citas.get(position).getImagen())
+        nombreTxt.setText(this.citas.get(position).getCharacter());
+        citaTxt.setText(this.citas.get(position).getQuote());
+        Picasso.get().load(this.citas.get(position).getImage())
                 .resize(500,500)
                 .into(imagen);
 
