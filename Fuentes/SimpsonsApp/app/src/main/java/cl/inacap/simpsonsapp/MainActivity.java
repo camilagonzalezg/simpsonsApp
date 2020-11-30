@@ -31,25 +31,33 @@ import cl.inacap.simpsonsapp.dto.Cita;
 
 public class MainActivity extends AppCompatActivity {
 
-private RequestQueue queue;
-private List<Cita> citas = new ArrayList<>();
-private CitasListAdapter adapter;
-private ListView listViewCitas;
-private Spinner spNumeroCitas;
-private Button solicitarCitasBtn;
+    //Referencia al listview de citas
+    private ListView listViewCitas;
+    //Referencia al Spinner
+    private Spinner spNumeroCitas;
+    //Referencia al botón
+    private Button solicitarCitasBtn;
+    //Referencia cola (volley)
+    private RequestQueue queue;
+    //Referencia Lista de citas
+    private List<Cita> citas = new ArrayList<>();
+    //Adaptador de citas
+    private CitasListAdapter adapter;
 
+    // Metodo que asegurará que codigo se ejecutará siempre, cuando se suspenda y vuelva suspensión
     @Override
     protected void onResume() {
         super.onResume();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Obtener dato del Spinner
         this.spNumeroCitas = findViewById(R.id.spnNumCitas);
+        //Spinner con lista de 10 opciones
         String[] list = new String[10];
         for (int i = 1; i < 11; i++) {
             list[i - 1] = "" + i;
@@ -60,6 +68,7 @@ private Button solicitarCitasBtn;
         spNumeroCitas.setAdapter(adapterSpinner);
 
         this.listViewCitas = findViewById(R.id.listView);
+        //Generar el adaptador y definir el listview
         this.adapter = new CitasListAdapter(this, R.layout.citas_list,this.citas);
         this.listViewCitas.setAdapter(this.adapter);
 
@@ -68,36 +77,47 @@ private Button solicitarCitasBtn;
             @Override
             public void onClick(View view) {
 
+                //Generar instancia de queue, recibe el contexto, que es el activity
                 queue = Volley.newRequestQueue(MainActivity.this);
+                //Referencia a lista de citas
                 String cantidadCitas = spNumeroCitas.getSelectedItem().toString().trim();
+                //Genrar request de tipo JSON, tipo GET, obtener datos
                 JsonArrayRequest jsonReq = new JsonArrayRequest(Request.Method.GET
+                        //Direccion url API, con la cantidad de citas seleccionada
                         , "https://thesimpsonsquoteapi.glitch.me/quotes?count="+cantidadCitas
                         ,null
+                        //Listener 1
                         , new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        //Para la conversión de datos, se usa un try catch
                         try {
+                            //Limpiar la lista
                             citas.clear();
-                            Cita[] quoteObt = new Gson().fromJson(response.toString(), Cita[].class);
-                            citas.addAll(Arrays.asList(quoteObt));
-                        } catch (Exception e) {
+                            //Parsear para convertirlo en un arreglo de citas
+                            Cita[] citaObt = new Gson()
+                                    //se obtiene resultado
+                                    .fromJson(response.toString(),
+                                            Cita[].class);
+                            //Convertir arreglo en lista
+                            citas.addAll(Arrays.asList(citaObt));
+                        } catch (Exception ex) {
                             citas = null;
                         } finally {
                             adapter.notifyDataSetChanged();
                         }
-
                     }
                 }
+                //Listener 2
                         , new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         citas = null;
                         adapter.notifyDataSetChanged();
                     }
-
                 });
+                //Agregar la peticion al queue
                 queue.add(jsonReq);
-
             }
         });
 
