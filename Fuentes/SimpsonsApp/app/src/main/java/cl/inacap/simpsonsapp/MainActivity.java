@@ -62,16 +62,15 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i < 11; i++) {
             list[i - 1] = "" + i;
         }
-
+        //Usar ArrayAdapter de tipo String con la lista de 10 opciones, para el view
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,list);
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spNumeroCitas.setAdapter(adapterSpinner);
-
         this.listViewCitas = findViewById(R.id.listView);
-        //Generar el adaptador y definir el listview
+        //Generar el adaptador para el listview
         this.adapter = new CitasListAdapter(this, R.layout.citas_list,this.citas);
         this.listViewCitas.setAdapter(this.adapter);
-
+        //Boton que ingresa datos
         this.solicitarCitasBtn = findViewById(R.id.btnSolicitar);
         this.solicitarCitasBtn.setOnClickListener(new View.OnClickListener() {
             @Override
